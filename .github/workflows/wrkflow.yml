@@ -3,7 +3,7 @@ on: [push]
 
 jobs:
   build-secure-and-push:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     - name: Self sast-scan
       uses: AppThreat/sast-scan-action@v1.0.0
