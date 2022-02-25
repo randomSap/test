@@ -1,0 +1,19 @@
+name: workflow_name
+on: [push]
+
+jobs:
+  build-secure-and-push:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Self sast-scan
+      uses: AppThreat/sast-scan-action@v1.0.0
+      runs-on: ubuntu-latest
+        with:
+    output: reports
+    type: python,bash
+      - name: Upload scan reports
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: sast-scan-reports
+          path: reports
+
