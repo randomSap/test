@@ -9,7 +9,7 @@ jobs:
     - name: Self sast-scan
       uses: AppThreat/sast-scan-action@1.0.2
       with:
-        src: /test/work
+        src: /folder
         output: reports
         type: python
     - name: Upload scan reports
