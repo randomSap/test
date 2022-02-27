@@ -9,7 +9,7 @@ jobs:
     - name: Self sast-scan
       uses: AppThreat/sast-scan-action@1.0.2
       with:
-        src: https://github.com/randomSap/test/tree/main/github/workspace
+        src: /home/kali/test
         output: reports
         type: python
     - name: Upload scan reports
