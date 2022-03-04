@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   build-secure-and-push:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
     - name: Self sast-scan
       uses: AppThreat/sast-scan-action@1.0.2
@@ -17,4 +17,8 @@ jobs:
       with:
         name: sast-scan-reports
         path: reports
+    - name: Download a single artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: sast-scan-reports
    
