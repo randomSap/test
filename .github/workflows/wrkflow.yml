@@ -8,8 +8,6 @@ jobs:
     steps:
     - run: |
             git clone https://github.com/randomSap/test.git
-            pwd 
-            ls 
     - name: Self sast-scan
       uses: AppThreat/sast-scan-action@1.0.2
       with:
@@ -20,10 +18,4 @@ jobs:
       with:
         name: sast-scan-reports
         path: reports
-    - run: |
-            ls
-            pwd
-            cd ..
-            pwd
-            
    
