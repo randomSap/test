@@ -13,7 +13,7 @@ jobs:
     - name: Self sast-scan
       uses: AppThreat/sast-scan-action@1.0.2
       with:
-        src: /github/workspace/test/work
+        src: /github/workspace/test/work/test/test
         output: reports
         type: python
     - name: Upload scan reports
