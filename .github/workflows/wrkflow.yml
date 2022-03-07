@@ -21,6 +21,5 @@ jobs:
     - name: Upload to RS
       run:
           | 
-          pwd
-          ls
+          python python/AppThreatUpload.py
    
