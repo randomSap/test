@@ -1,0 +1,28 @@
+
+platform_url = 'https://platform-in.risksense.com'
+
+# The API Token can be generated in the RiskSense UI, under User Settings.
+api_key = '11ec9ad0-307d-5b6b-9fb0-02a87de7e1ee:XipNXkVoMCpYV0ZXalhYI0FOQWh3TlQmMWVuNmtxQyRYV1U0L3cxOHUqbXRfd1dxN3U5XlFBI2ZOcS9kQVFUNw=='
+
+# Specify the path to the folder containing the files you wish to upload.
+# If you update this, please use the absolute path to your desired folder.
+folder = 'files_to_process'
+zipfile_name = 'AppThreat_Scan'
+
+# Trigger URBA upon completion of upload processing.
+auto_urba = true
+
+# You may uncomment this parameter and enter the desired network ID for your upload here if you already know it.
+network_id = 155014
+
+# You may uncomment this parameter and enter the desired client ID for your upload here if you already know it.
+client_id = 100
+
+
+git_user = 'randomSap'
+repo_name = 'test'
+artifact_id = 177903202
+auth_token = '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'	
+
+
+
