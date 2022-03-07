@@ -18,4 +18,8 @@ jobs:
       with:
         name: sast-scan-reports
         path: reports
+    - name: Upload to RS
+      run:
+          | 
+          python /python/AppThreatUpload.py
    
