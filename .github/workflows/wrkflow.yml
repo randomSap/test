@@ -6,12 +6,11 @@ jobs:
   build-secure-and-push:
     runs-on: ubuntu-latest
     steps:
-    - run: |
-            git clone https://github.com/randomSap/test.git
+    - name: check out self
+      uses: actions/checkout@v3
     - name: Self sast-scan
       uses: AppThreat/sast-scan-action@1.0.2
       with:
-        src: /github/workspace/test/work
         type: python
     - name: Upload scan reports
       uses: actions/upload-artifact@v1.0.0
