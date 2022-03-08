@@ -93,7 +93,7 @@ def __requests_retry_session(max_retries=5, backoff_factor=0.5,
 def create_assessment(platform_url,api_key,client_id):
 
   startDate = str(datetime.now().strftime('%Y-%m-%d'))
-  startTime = str(datetime.now().strftime('%H:%M'))
+  startTime = str(datetime.now().strftime('%H-%M'))
   assess_name = "AppThreat_"+ startDate + "_" + startTime
   url = "{}//api/v1/client/{}/assessment".format(
       platform_url, client_id)
