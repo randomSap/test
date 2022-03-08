@@ -6,8 +6,8 @@ api_key = '11ec9ad0-307d-5b6b-9fb0-02a87de7e1ee:XipNXkVoMCpYV0ZXalhYI0FOQWh3TlQm
 
 # Specify the path to the folder containing the files you wish to upload.
 # If you update this, please use the absolute path to your desired folder.
-folder = 'files_to_process'
 zipfile_name = 'AppThreat_Scan'
+json_filename = 'bandit-report.json'
 
 # Trigger URBA upon completion of upload processing.
 auto_urba = true
@@ -22,7 +22,6 @@ client_id = 100
 git_user = 'randomSap'
 repo_name = 'test'
 artifact_id = 177903202
-auth_token = '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'	
 
 
 
