@@ -18,15 +18,6 @@ jobs:
       with:
         name: sast-scan-reports
         path: reports
-    - name: Look for dir
-      run:
-          |
-          pwd 
-          ls reports
-  upload-to-rs:
-    needs: build-secure-and-push
-    runs-on: ubuntu-latest
-    steps:
     - name: Check out self
       uses: actions/checkout@v3
     - name: Upload to RS
