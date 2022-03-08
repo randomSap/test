@@ -63,7 +63,6 @@ def process_config(config):
     api_key = config['api_key']
     client_id = config['client_id']
     auth_token = os.getenv('AUTH_TOKEN')
-    print(os.environ)
     git_user = config['git_user']
     repo_name = config['repo_name']
     artifact_id = config['artifact_id']
@@ -231,15 +230,14 @@ def extract_zip(git_user,repo_name,artifact_id,auth_token,folder,zipfile_name):
         file = open(file_name, "wb")
         file.write(response.content)
         file.close()
-        print(response.content)
-#         try:
-        with ZipFile(file_name, 'r') as zip:
-          print('\nExtracting the file now...')
-          zip.extract(member="bandit-report.json", path=".")
-#         except: 
-#           print("Error while extracting the file...")
-#           print("Exitting...")
-#           sys.exit(0)
+        try:
+          with ZipFile(file_name, 'r') as zip:
+            print('\nExtracting the file now...')
+            zip.extract(member="bandit-report.json", path=".")
+        except: 
+          print("Error while extracting the file...")
+          print("Exitting...")
+          sys.exit(0)
 
 
 
