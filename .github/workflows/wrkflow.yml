@@ -18,6 +18,10 @@ jobs:
       with:
         name: sast-scan-reports
         path: reports
+    - name: Download scan reports
+      uses: actions/download-artifact@v3
+      with:
+        name: donwload artifact
   upload-to-rs:
     needs: build-secure-and-push
     runs-on: ubuntu-latest
