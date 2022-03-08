@@ -22,6 +22,8 @@ jobs:
     needs: build-secure-and-push
     runs-on: ubuntu-latest
     steps:
+    - name: Check out self
+      uses: actions/checkout@v3
     - name: Upload to RS
       env:
         AUTH_TOKEN: ${{ secrets.AUTH_TOKEN}}
