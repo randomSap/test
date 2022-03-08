@@ -62,7 +62,7 @@ def process_config(config):
     platform_url = config['platform_url']
     api_key = config['api_key']
     client_id = config['client_id']
-    auth_token = os.getenv['AUTH TOKEN']
+    auth_token = os.getenv('AUTH TOKEN')
     git_user = config['git_user']
     repo_name = config['repo_name']
     artifact_id = config['artifact_id']
