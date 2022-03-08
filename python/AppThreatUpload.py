@@ -113,7 +113,7 @@ def create_assessment(platform_url,api_key,client_id):
           url, headers=header, data=json.dumps(body))
   except TimeoutError as ex:
       print(ex)
-
+  response = json.loads(raw_response.text)
   if raw_response and raw_response.status_code == 201:
       response = json.loads(raw_response.text)
       print("Assessment successfully created ")
