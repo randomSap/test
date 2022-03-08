@@ -259,6 +259,7 @@ def get_artifact_id(git_user, repo_name,auth_token):
   if raw_response and raw_response.status_code == 200:
       response = json.loads(raw_response.text)  
       artifact_id = response['artifacts'][0]['id']
+      print(response)
       return artifact_id
 
 
