@@ -10,7 +10,7 @@ from zipfile import ZipFile
 
 
 def jsontocsv(json_filename):
-  with open(json_filename) as json_format_file: 
+  with open("../reports/"json_filename) as json_format_file: 
     j = json.load(json_format_file)
   csv_filename = "AppThreatReport.csv"
   csv = open("AppThreatReport.csv","w")
@@ -261,6 +261,7 @@ def get_artifact_id(git_user, repo_name,auth_token):
 #MAIN
 def main():
 
+  #DEBUG - remove xipfilename, 
   #READING THE CONFIG FILE 
   conf_file = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'conf', 'config.toml')
   config = read_config_file(conf_file)
@@ -272,8 +273,8 @@ def main():
     sys.exit(0)
 
   #DOWNLOADING AND EXTRACTING THE ZIP FILE OF ARTIFACT 
-  artifact_id = get_artifact_id(git_user, repo_name, auth_token)
-  extract_zip(git_user,repo_name,artifact_id,auth_token,zipfile_name)
+  #artifact_id = get_artifact_id(git_user, repo_name, auth_token)
+  #extract_zip(git_user,repo_name,artifact_id,auth_token,zipfile_name)
 
   #CONVERTING THE JSON FILE TO CSV
   csv_filename = jsontocsv(json_filename)
