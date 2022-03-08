@@ -64,14 +64,13 @@ def process_config(config):
     auth_token = os.getenv('AUTH_TOKEN')
     git_user = config['git_user']
     repo_name = config['repo_name']
-    artifact_id = config['artifact_id']
     zipfile_name = config['zipfile_name']
     network_id = config['network_id']
   except:
     print("Error accessing/using data from the config file.")
     print("The config file must contain the following values")
     print("platform_url, api_key, client_id, network_id, git_user, repo_name, auth_token, artifact_id, zipfile_name, json_filename")
-  return platform_url, api_key, client_id, network_id, git_user, repo_name, auth_token, artifact_id, zipfile_name, json_filename
+  return platform_url, api_key, client_id, network_id, git_user, repo_name, auth_token, zipfile_name, json_filename
 
 
 def __requests_retry_session(max_retries=5, backoff_factor=0.5,
