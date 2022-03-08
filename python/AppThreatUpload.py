@@ -10,8 +10,6 @@ import time
 from zipfile import ZipFile
 
 
-#NEEDS ERROR HANDLING 
-
 #Setting time for timestamp
 now = datetime.now()
 
@@ -73,7 +71,7 @@ def process_config(config):
     print("Error accessing/using data from the config file.")
     print("The config file must contain the following values")
     print("platform_url, api_key, client_id, network_id, git_user, repo_name, auth_token, artifact_id, zipfile_name, json_filename")
-    return platform_url, api_key, client_id, network_id, git_user, repo_name, auth_token, artifact_id, zipfile_name, json_filename
+  return platform_url, api_key, client_id, network_id, git_user, repo_name, auth_token, artifact_id, zipfile_name, json_filename
 
 
 def __requests_retry_session(max_retries=5, backoff_factor=0.5,
