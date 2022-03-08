@@ -22,7 +22,7 @@ jobs:
       run:
           |
           pwd 
-          ls
+          ls reports
   upload-to-rs:
     needs: build-secure-and-push
     runs-on: ubuntu-latest
