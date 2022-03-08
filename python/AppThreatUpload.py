@@ -58,7 +58,7 @@ def read_config_file(filename):
         exit(1)
 
 def process_config(config):
-
+  try:
     platform_url = config['platform_url']
     api_key = config['api_key']
     json_filename = config['json_filename']
@@ -69,6 +69,10 @@ def process_config(config):
     artifact_id = config['artifact_id']
     zipfile_name = config['zipfile_name']
     network_id = config['network_id']
+  except:
+    print("Error accessing/using data from the config file.")
+    print("The config file must contain the following values")
+    print("platform_url, api_key, client_id, network_id, git_user, repo_name, auth_token, artifact_id, zipfile_name, json_filename")
     return platform_url, api_key, client_id, network_id, git_user, repo_name, auth_token, artifact_id, zipfile_name, json_filename
 
 
@@ -226,7 +230,7 @@ def extract_zip(git_user,repo_name,artifact_id,auth_token,zipfile_name):
           'Authorization': 'Bearer {0}'.format(auth_token)
         }
         response = requests.get(url, headers=headers, data=payload, timeout=5)
-        file_name = zipfile_name + ".zip"
+        file_name = zipfile_name
         file = open(file_name, "wb")
         file.write(response.content)
         file.close()
@@ -261,18 +265,13 @@ def main():
   extract_zip(git_user,repo_name,artifact_id,auth_token,zipfile_name)
 
   #CONVERTING THE JSON FILE TO CSV
-#   json_filename = "bandit-report.json"
   csv_filename = jsontocsv(json_filename)
 
-  #BUCKLE UP... (HOPEFULLY WORKS)
+  #BUCKLE UP...
   assessment_id = create_assessment(platform_url, api_key, client_id)
   upload_id = get_upload_id(platform_url, api_key, client_id, assessment_id, network_id)
   upload_file(upload_id,platform_url,client_id,api_key,csv_filename)
   start_parsing(upload_id, platform_url, client_id, api_key)
-
-  #CLEANING UP THE MESS
-#   os.remove( json_filename)
-#   os.remove(csv_filename)
 
 #  Execute the script
 if __name__ == "__main__":
