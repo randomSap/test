@@ -57,10 +57,6 @@ def process_config(config):
     api_key = config['api_key']
     json_filename = config['json_filename']
     client_id = config['client_id']
-#     auth_token = os.getenv('AUTH_TOKEN')
-#     git_user = config['git_user']
-#     repo_name = config['repo_name']
-#     zipfile_name = config['zipfile_name']
     network_id = config['network_id']
   except:
     print("Error accessing/using data from the config file.")
@@ -170,7 +166,6 @@ def upload_file(upload_id,platform_url,client_id,api_key,csv_filename):
       print(ex)
 
   if raw_response and raw_response.status_code == 201:
-      #response = json.loads(raw_response.text) 
       return
   else:
       print("Error while uploading the file ")
@@ -199,63 +194,17 @@ def start_parsing(upload_id, platform_url, client_id, api_key ):
       print(ex)
 
   if raw_response and raw_response.status_code == 200:
-      #response = json.loads(raw_response.text)    
       print("Successfully started parsing the uploaded file :)")
   else:
       print("Couldnt start parsing the file")
       print("Exitting...")
       sys.exit(0)
 
-  
-# def extract_zip(git_user,repo_name,artifact_id,auth_token,zipfile_name):
-
-#         print("\n\nGathered Info :: ")
-#         print("[+] Github Username : ", git_user)
-#         print("[+] Repository Name : ", repo_name)
-#         print("[+] Artifact ID : ", artifact_id)
-#         print('Fetching the artifact from the desired Github Repository...')
-#         url = "https://api.github.com/repos/{0}/{1}/actions/artifacts/{2}/zip".format(git_user,repo_name,artifact_id)
-#         payload={}
-#         headers = {
-#           'Authorization': 'Bearer {0}'.format(auth_token)
-#         }
-#         response = requests.get(url, headers=headers, data=payload, timeout=5)
-#         file_name = zipfile_name
-#         file = open(file_name, "wb")
-#         file.write(response.content)
-#         file.close()
-#         try:
-#           with ZipFile(file_name, 'r') as zip:
-#             print('\nExtracting the file now...')
-#             zip.extract(member="bandit-report.json", path=".")
-#         except: 
-#           print("Error while extracting the file...")
-#           print("Exitting...")
-#           sys.exit(0)
-
-# def get_artifact_id(git_user, repo_name,auth_token):
-#   url = "https://api.github.com/repos/{}/{}/actions/artifacts".format(git_user,repo_name)
-#   payload={}
-#   header = {
-#   'Authorization': 'Bearer {0}'.format(auth_token)
-#   }
-#   try:
-#       raw_response = __requests_retry_session().get(
-#           url, headers=header, data=json.dumps(payload))
-#   except TimeoutError as ex:
-#       print("Error while getting the artifact id. ")
-#       print(ex)
-
-#   if raw_response and raw_response.status_code == 200:
-#       response = json.loads(raw_response.text)  
-#       artifact_id = response['artifacts'][0]['id']
-#       return artifact_id
 
 
 #MAIN
 def main():
 
-  #DEBUG - remove xipfilename, 
   #READING THE CONFIG FILE 
   conf_file = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'conf', 'config.toml')
   config = read_config_file(conf_file)
@@ -266,15 +215,10 @@ def main():
     print("\n[+] JsonFile Name \n[+] Client ID \n[+] Platform URL \n[+] Network ID")
     sys.exit(0)
 
-  #DOWNLOADING AND EXTRACTING THE ZIP FILE OF ARTIFACT 
-  #artifact_id = get_artifact_id(git_user, repo_name, auth_token)
-  #extract_zip(git_user,repo_name,artifact_id,auth_token,zipfile_name)
 
   #CONVERTING THE JSON FILE TO CSV
   csv_filename = jsontocsv(json_filename)
-#   print(os.listdir("."))
-#   print(os.listdir(".."))
-#   print(os.listdir("../reports"))
+
   #BUCKLE UP...
   assessment_id = create_assessment(platform_url, api_key, client_id)
   upload_id = get_upload_id(platform_url, api_key, client_id, assessment_id, network_id)
