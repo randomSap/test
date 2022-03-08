@@ -230,6 +230,7 @@ def extract_zip(git_user,repo_name,artifact_id,auth_token,folder,zipfile_name):
         file = open(file_name, "wb")
         file.write(response.content)
         file.close()
+        print(response.content)
 #         try:
         with ZipFile(file_name, 'r') as zip:
           print('\nExtracting the file now...')
