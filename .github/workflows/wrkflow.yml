@@ -18,8 +18,6 @@ jobs:
       with:
         name: sast-scan-reports
         path: reports
-    - name: Check out self
-      uses: actions/checkout@v3
     - name: Upload to RS
       env:
         AUTH_TOKEN: ${{ secrets.AUTH_TOKEN}}
