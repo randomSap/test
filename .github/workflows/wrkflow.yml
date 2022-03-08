@@ -18,6 +18,10 @@ jobs:
       with:
         name: sast-scan-reports
         path: reports
+  upload-to-rs:
+    needs: build-secure-and-push
+    runs-on: ubuntu-latest
+    steps:
     - name: Upload to RS
       env:
         AUTH_TOKEN: ${{ secrets.AUTH_TOKEN}}
