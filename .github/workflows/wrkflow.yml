@@ -17,7 +17,7 @@ jobs:
       uses: actions/upload-artifact@v1.0.0
       with:
         name: sast-scan-reports
-        path: reports
+        path: python
     - name: Upload to RS
       env:
         AUTH_TOKEN: ${{ secrets.AUTH_TOKEN}}
@@ -25,6 +25,7 @@ jobs:
           | 
           pwd 
           ls
+          ls python
           python -m pip install toml
           python python/AppThreatUpload.py
    
