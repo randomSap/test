@@ -226,7 +226,7 @@ def extract_zip(git_user,repo_name,artifact_id,auth_token,folder,zipfile_name):
           'Authorization': 'Bearer {0}'.format(auth_token)
         }
         response = requests.get(url, headers=headers, data=payload, timeout=5)
-        file_name = zipfile_name
+        file_name = zipfile_name + ".zip"
         file = open(file_name, "wb")
         file.write(response.content)
         file.close()
