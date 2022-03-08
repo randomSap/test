@@ -10,7 +10,7 @@ from zipfile import ZipFile
 
 
 def jsontocsv(json_filename):
-  with open("../reports/"+json_filename) as json_format_file: 
+  with open("./reports/"+json_filename) as json_format_file: 
     j = json.load(json_format_file)
   csv_filename = "AppThreatReport.csv"
   csv = open("AppThreatReport.csv","w")
@@ -277,10 +277,10 @@ def main():
   #extract_zip(git_user,repo_name,artifact_id,auth_token,zipfile_name)
 
   #CONVERTING THE JSON FILE TO CSV
-  #csv_filename = jsontocsv(json_filename)
-  print(os.listdir("."))
-  print(os.listdir(".."))
-  print(os.listdir("../reports"))
+  csv_filename = jsontocsv(json_filename)
+#   print(os.listdir("."))
+#   print(os.listdir(".."))
+#   print(os.listdir("../reports"))
   #BUCKLE UP...
   assessment_id = create_assessment(platform_url, api_key, client_id)
   upload_id = get_upload_id(platform_url, api_key, client_id, assessment_id, network_id)
