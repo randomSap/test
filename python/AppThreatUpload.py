@@ -264,7 +264,7 @@ def get_artifact_id(git_user, repo_name,auth_token):
 
 #MAIN
 def main():
-
+  time.sleep(10)
 
   #READING THE CONFIG FILE 
   conf_file = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'conf', 'config.toml')
