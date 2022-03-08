@@ -10,7 +10,7 @@ from zipfile import ZipFile
 
 
 def jsontocsv(json_filename):
-  with open("../reports/"json_filename) as json_format_file: 
+  with open("../reports/"+json_filename) as json_format_file: 
     j = json.load(json_format_file)
   csv_filename = "AppThreatReport.csv"
   csv = open("AppThreatReport.csv","w")
