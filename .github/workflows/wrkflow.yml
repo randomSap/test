@@ -23,6 +23,8 @@ jobs:
         AUTH_TOKEN: ${{ secrets.AUTH_TOKEN}}
       run:
           | 
+          pwd 
+          ls
           python -m pip install toml
           python python/AppThreatUpload.py
    
