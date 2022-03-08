@@ -268,7 +268,7 @@ def main():
   config = read_config_file(conf_file)
   platform_url, api_key, client_id,network_id, git_user, repo_name, auth_token, zipfile_name, json_filename = process_config(config)
   #CHECKING FOR MISSING VARIABLES
-  if (git_user == "" or repo_name == "" or artifact_id == "" or auth_token == "" or zipfile_name == "" or json_filename == ""):
+  if (git_user == "" or repo_name == "" or auth_token == "" or zipfile_name == "" or json_filename == ""):
     print("Missing one or more of the following values ")
     print("[+] Github Username \n[+] Repository Name\n[+] Github Access Token \n[+] ZipFile Name \n[+] JsonFile Name ")
     sys.exit(0)
