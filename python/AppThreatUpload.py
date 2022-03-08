@@ -241,7 +241,23 @@ def extract_zip(git_user,repo_name,artifact_id,auth_token,zipfile_name):
           print("Exitting...")
           sys.exit(0)
 
+def get_artifact_id(git_user, repo_name,auth_token):
+  url = "https://api.github.com/repos/{}/{}/actions/artifacts".format(git_user,repo_name)
+  payload={}
+  header = {
+  'Authorization': 'Bearer {0}'.format(auth_token)
+  }
+  try:
+      raw_response = __requests_retry_session().get(
+          url, headers=header, data=json.dumps(payload))
+  except TimeoutError as ex:
+      print("Error while getting the artifact id. ")
+      print(ex)
 
+  if raw_response and raw_response.status_code == 200:
+      response = json.loads(raw_response.text)  
+      artifact_id = response['artifacts'][0]['id']
+      return artifact_id
 
 
 #MAIN
@@ -251,15 +267,15 @@ def main():
   #READING THE CONFIG FILE 
   conf_file = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'conf', 'config.toml')
   config = read_config_file(conf_file)
-  platform_url, api_key, client_id,network_id, git_user, repo_name, auth_token, artifact_id, zipfile_name, json_filename = process_config(config)
-
+  platform_url, api_key, client_id,network_id, git_user, repo_name, auth_token, zipfile_name, json_filename = process_config(config)
   #CHECKING FOR MISSING VARIABLES
   if (git_user == "" or repo_name == "" or artifact_id == "" or auth_token == "" or zipfile_name == "" or json_filename == ""):
-    print("Missing one or more of the following values in the config file ")
-    print("[+] Github Username \n[+] Repository Name\n[+] Artifact ID \n[+] Github Access Token \n[+] ZipFile Name \n[+] JsonFile Name ")
+    print("Missing one or more of the following values ")
+    print("[+] Github Username \n[+] Repository Name\n[+] Github Access Token \n[+] ZipFile Name \n[+] JsonFile Name ")
     sys.exit(0)
 
   #DOWNLOADING AND EXTRACTING THE ZIP FILE OF ARTIFACT 
+  artifact_id = get_artifact_id(git_user, repo_name, auth_token)
   extract_zip(git_user,repo_name,artifact_id,auth_token,zipfile_name)
 
   #CONVERTING THE JSON FILE TO CSV
