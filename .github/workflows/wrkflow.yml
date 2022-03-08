@@ -18,10 +18,6 @@ jobs:
       with:
         name: sast-scan-reports
         path: reports
-    - name: Download scan reports
-      uses: actions/download-artifact@v3
-      with:
-        name: sast-scan-reports
     - name: Look for dir
       run:
           |
