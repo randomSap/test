@@ -226,21 +226,19 @@ def extract_zip(git_user,repo_name,artifact_id,auth_token,folder,zipfile_name):
           'Authorization': 'Bearer {0}'.format(auth_token)
         }
         response = requests.get(url, headers=headers, data=payload, timeout=5)
-        file_name = folder + "/" + zipfile_name
-        new_file_name = folder +"/" + zipfile_name + now.strftime("%d-%m-%Y@%H-%M")+".zip"
+        file_name = zipfile_name
         file = open(file_name, "wb")
         file.write(response.content)
         file.close()
         try:
           with ZipFile(file_name, 'r') as zip:
             print('\nExtracting the file now...')
-            zip.extract(member="bandit-report.json", path=folder)
+            zip.extract(member="bandit-report.json", path=".")
         except: 
           print("Error while extracting the file...")
           print("Exitting...")
           sys.exit(0)
 
-        os.rename(file_name,new_file_name)
 
 
 
