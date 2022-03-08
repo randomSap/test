@@ -15,11 +15,11 @@ from zipfile import ZipFile
 #Setting time for timestamp
 now = datetime.now()
 
-def jsontocsv(folder, json_filename):
-  with open(folder + "/" + json_filename) as json_format_file: 
+def jsontocsv(json_filename):
+  with open(json_filename) as json_format_file: 
     j = json.load(json_format_file)
   csv_filename = "AppThreatReport.csv"
-  csv = open(folder + "/AppThreatReport.csv","w")
+  csv = open("AppThreatReport.csv","w")
   csvdata = "Pluginid,Locaiton,Address,Name,Title,Severity,Description,Solution\n"
   csv.write(csvdata)
   for i in j['results']:
@@ -61,15 +61,15 @@ def process_config(config):
 
     platform_url = config['platform_url']
     api_key = config['api_key']
+    json_filename = config['json_filename']
     client_id = config['client_id']
     auth_token = os.getenv('AUTH_TOKEN')
     git_user = config['git_user']
     repo_name = config['repo_name']
     artifact_id = config['artifact_id']
-    folder = config['folder']
     zipfile_name = config['zipfile_name']
     network_id = config['network_id']
-    return platform_url, api_key, client_id, network_id, git_user, repo_name, auth_token, artifact_id, folder, zipfile_name
+    return platform_url, api_key, client_id, network_id, git_user, repo_name, auth_token, artifact_id, zipfile_name, json_filename
 
 
 def __requests_retry_session(max_retries=5, backoff_factor=0.5,
@@ -154,7 +154,7 @@ def get_upload_id(platform_url, api_key, client_id, assessment_id, network_id):
 
 
 #Upload the file using the upload_id 
-def upload_file(upload_id,platform_url,client_id,api_key,csv_filename,folder):
+def upload_file(upload_id,platform_url,client_id,api_key,csv_filename):
 
   url = "{}//api/v1/client/{}/upload/{}/file".format(
       platform_url, client_id, upload_id)
@@ -165,7 +165,7 @@ def upload_file(upload_id,platform_url,client_id,api_key,csv_filename,folder):
       "filename": csv_filename,
        }
 
-  scanFile={'scanFile': open(folder + "/" + csv_filename,'rb')}
+  scanFile={'scanFile': open(csv_filename,'rb')}
 
   try:
       raw_response = __requests_retry_session().post(
@@ -213,7 +213,7 @@ def start_parsing(upload_id, platform_url, client_id, api_key ):
       sys.exit(0)
 
   
-def extract_zip(git_user,repo_name,artifact_id,auth_token,folder,zipfile_name):
+def extract_zip(git_user,repo_name,artifact_id,auth_token,zipfile_name):
 
         print("\n\nGathered Info :: ")
         print("[+] Github Username : ", git_user)
@@ -249,31 +249,30 @@ def main():
   #READING THE CONFIG FILE 
   conf_file = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'conf', 'config.toml')
   config = read_config_file(conf_file)
-  platform_url, api_key, client_id,network_id, git_user, repo_name, auth_token,artifact_id,folder,zipfile_name = process_config(config)
+  platform_url, api_key, client_id,network_id, git_user, repo_name, auth_token, artifact_id, zipfile_name, json_filename = process_config(config)
 
-  #INITIALIZING NECCESSARY VARIABLES
-  #DEBUG - ABORT IF MISSING 
-  if (git_user == "" or repo_name == "" or artifact_id == "" or auth_token == "" or folder == "" or zipfile_name == ""):
+  #CHECKING FOR MISSING VARIABLES
+  if (git_user == "" or repo_name == "" or artifact_id == "" or auth_token == "" or zipfile_name == "" or json_filename == ""):
     print("Missing one or more of the following values in the config file ")
-    print("[+] Github Username \n[+] Repository Name\n[+] Artifact ID \n[+] Github Access Token \n[+]Download Folder \n[+]ZipFile name\n")
+    print("[+] Github Username \n[+] Repository Name\n[+] Artifact ID \n[+] Github Access Token \n[+] ZipFile Name \n[+] JsonFile Name ")
     sys.exit(0)
 
   #DOWNLOADING AND EXTRACTING THE ZIP FILE OF ARTIFACT 
-  extract_zip(git_user,repo_name,artifact_id,auth_token,folder,zipfile_name)
+  extract_zip(git_user,repo_name,artifact_id,auth_token,zipfile_name)
 
   #CONVERTING THE JSON FILE TO CSV
-  json_filename = "bandit-report.json"
-  csv_filename = jsontocsv(folder, json_filename)
+#   json_filename = "bandit-report.json"
+  csv_filename = jsontocsv(json_filename)
 
   #BUCKLE UP... (HOPEFULLY WORKS)
   assessment_id = create_assessment(platform_url, api_key, client_id)
   upload_id = get_upload_id(platform_url, api_key, client_id, assessment_id, network_id)
-  upload_file(upload_id,platform_url,client_id,api_key,csv_filename,folder)
+  upload_file(upload_id,platform_url,client_id,api_key,csv_filename)
   start_parsing(upload_id, platform_url, client_id, api_key)
 
   #CLEANING UP THE MESS
-  os.remove(folder + "/" + json_filename)
-  os.remove(folder + "/" + csv_filename)
+#   os.remove( json_filename)
+#   os.remove(csv_filename)
 
 #  Execute the script
 if __name__ == "__main__":
