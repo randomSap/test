@@ -264,7 +264,7 @@ def main():
   #CHECKING FOR MISSING VARIABLES
   if (json_filename == "" or network_name == "" or client_id == "" or platform_url == "" or api_key == ""):
     print("Missing one or more of the following values ")
-    print("\n[+] JsonFile Name (Report) \n[+] API kay \n[+] Client ID \n[+] Platform URL \n[+] Network Name \n[+] Report Folder Name")
+    print("\n[+] JsonFile Name (Report) \n[+] API kay \n[+] Client ID \n[+] Platform URL \n[+] Network Name ")
     sys.exit(0)
   
 
