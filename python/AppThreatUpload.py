@@ -120,8 +120,6 @@ def create_assessment(platform_url,api_key,client_id):
       print("[+] Assessment Name : ",assess_name)
       return response['id']
   else:
-      print(response)
-      print(response.content)
       print('Error while creating the assessment')
       sys.exit(0)
 
