@@ -255,6 +255,7 @@ def main():
   #READING THE CONFIG FILE 
   conf_file = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'conf', 'config.toml')
   config = read_config_file(conf_file)
+  network_name = ""
   platform_url, api_key, client_id, network_name, json_filename = process_config(config)
   #CHECKING FOR MISSING VARIABLES
   if (json_filename == "" or network_name == "" or client_id == "" or platform_url == "" or api_key == ""):
