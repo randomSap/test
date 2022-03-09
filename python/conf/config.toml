@@ -2,7 +2,7 @@
 platform_url = 'https://platform-in.risksense.com'
 
 # The API Token can be generated in the RiskSense UI, under User Settings.
-api_key = '11ec9ad0-307d-5b6b-9fb0-02a87de7e1ee:XipNXkVoMCpYV0ZXalhYI0FOQWh3TlQmMWVuNmtxQyRYV1U0L3cxOHUqbXRfd1dxN3U5XlFBI2ZOcS9kQVFUNw=='
+#api_key = ''
 
 # Specify the path to the folder containing the files you wish to upload.
 # If you update this, please use the absolute path to your desired folder.
