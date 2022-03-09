@@ -267,7 +267,7 @@ def main():
   csv_filename = jsontocsv(json_filename)
 
   #BUCKLE UP...
-  network_id = get_network_id(platformurl, api_key, client_id,network_name)
+  network_id = get_network_id(platform_url, api_key, client_id,network_name)
   assessment_id = create_assessment(platform_url, api_key, client_id)
   upload_id = get_upload_id(platform_url, api_key, client_id, assessment_id, network_id)
   upload_file(upload_id,platform_url,client_id,api_key,csv_filename)
