@@ -57,12 +57,13 @@ def process_config(config):
     api_key = os.getenv('RS_API_KEY')
     json_filename = config['json_filename']
     client_id = config['client_id']
-    network_id = config['network_id']
+#     network_id = config['network_id']
+    network_name = config['network_name']
   except:
     print("Error accessing/using data from the config file.")
     print("The config file must contain the following values")
     print("platform_url, api_key, client_id, network_id, json_filename")
-  return platform_url, api_key, client_id, network_id,json_filename
+  return platform_url, api_key, client_id, network_name,json_filename
 
 
 def __requests_retry_session(max_retries=5, backoff_factor=0.5,
@@ -143,7 +144,7 @@ def get_upload_id(platform_url, api_key, client_id, assessment_id, network_id):
       return response['id']
   else:
       print('Error while getting upload id...')
-      print("Exitting...")
+      print("Exiting...")
       sys.exit(0)
 
 
@@ -169,7 +170,7 @@ def upload_file(upload_id,platform_url,client_id,api_key,csv_filename):
       return
   else:
       print("Error while uploading the file ")
-      print("Exitting...")
+      print("Exiting...")
       sys.exit(0)
 
 
@@ -197,10 +198,56 @@ def start_parsing(upload_id, platform_url, client_id, api_key ):
       print("Successfully started parsing the uploaded file :)")
   else:
       print("Couldnt start parsing the file")
-      print("Exitting...")
+      print("Exiting...")
       sys.exit(0)
 
+# SEARCH FOR THE NETWORK AND GET THE NETWORK ID
+def get_network_id(platform_url, api_key, client_id, network_name):
 
+  url = "{}//api/v1/client/{}/network/search".format(
+      platform_url, client_id)
+
+  header = {
+      "content-type": "application/json",
+      "x-api-key": api_key}
+ 
+  body = {
+  "filters": [
+    {
+      "field": "name",
+      "exclusive": False ,
+      "operator": "EXACT",
+      "value": network_name
+    }
+  ],
+  "projection": "basic",
+  "sort": [
+    {
+      "field": "name",
+      "direction": "ASC"
+    }
+  ],
+  "page": 0,
+  "size": 1
+  }
+
+  try:
+      raw_response = __requests_retry_session().post(
+          url, headers=header, data=json.dumps(body))
+  except TimeoutError as ex:
+      print(ex)
+
+  if raw_response and raw_response.status_code == 200:
+      response = json.loads(raw_response.text)
+      if(response['page']['totalElements'] != 1):
+        print("Couldnt find the specified network.\nPlease update the config file... ")
+        print("Exiting...")
+        sys.exit(0)
+      else:
+        return (response['_embedded']['networks'][0]['id'])
+
+  else:
+    print('Error while finding the network')
 
 #MAIN
 def main():
@@ -208,18 +255,19 @@ def main():
   #READING THE CONFIG FILE 
   conf_file = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'conf', 'config.toml')
   config = read_config_file(conf_file)
-  platform_url, api_key, client_id, network_id, json_filename = process_config(config)
+  platform_url, api_key, client_id, network_name, json_filename = process_config(config)
   #CHECKING FOR MISSING VARIABLES
-  if (json_filename == ""):
+  if (json_filename == "" or network_name == "" or client_id == "" or platform_url == "" or api_key == ""):
     print("Missing one or more of the following values ")
-    print("\n[+] JsonFile Name \n[+] Client ID \n[+] Platform URL \n[+] Network ID")
+    print("\n[+] JsonFile Name \n[+] API kay \n[+] Client ID \n[+] Platform URL \n[+] Network Name")
     sys.exit(0)
-
+  
 
   #CONVERTING THE JSON FILE TO CSV
   csv_filename = jsontocsv(json_filename)
 
   #BUCKLE UP...
+  network_id = get_network_id(platformurl, api_key, client_id,network_name)
   assessment_id = create_assessment(platform_url, api_key, client_id)
   upload_id = get_upload_id(platform_url, api_key, client_id, assessment_id, network_id)
   upload_file(upload_id,platform_url,client_id,api_key,csv_filename)
