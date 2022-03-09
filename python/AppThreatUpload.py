@@ -9,8 +9,8 @@ from requests.adapters import HTTPAdapter
 from zipfile import ZipFile
 
 
-def jsontocsv(json_filename):
-  with open("./reports/"+json_filename) as json_format_file: 
+def jsontocsv(json_filename,folder):
+  with open(folder+json_filename) as json_format_file: 
     j = json.load(json_format_file)
   csv_filename = "AppThreatReport.csv"
   csv = open("AppThreatReport.csv","w")
@@ -57,13 +57,14 @@ def process_config(config):
     api_key = os.getenv('RS_API_KEY')
     json_filename = config['json_filename']
     client_id = config['client_id']
+    folder = config['folder']
 #     network_id = config['network_id']
     network_name = config['network_name']
   except:
     print("Error accessing/using data from the config file.")
     print("The config file must contain the following values")
     print("[+] platform_url \n[+] api_key\n[+] client_id\n[+] network_id\n[+] json_filename")
-  return platform_url, api_key, client_id, network_name,json_filename
+  return platform_url, api_key, client_id, network_name, json_filename, folder 
 
 
 def __requests_retry_session(max_retries=5, backoff_factor=0.5,
@@ -264,7 +265,7 @@ def main():
   
 
   #CONVERTING THE JSON FILE TO CSV
-  csv_filename = jsontocsv(json_filename)
+  csv_filename = jsontocsv(json_filename,folder)
 
   #BUCKLE UP...
   network_id = get_network_id(platform_url, api_key, client_id,network_name)
@@ -272,7 +273,7 @@ def main():
   upload_id = get_upload_id(platform_url, api_key, client_id, assessment_id, network_id)
   upload_file(upload_id,platform_url,client_id,api_key,csv_filename)
   start_parsing(upload_id, platform_url, client_id, api_key)
-
+  
 #  Execute the script
 if __name__ == "__main__":
     try:
