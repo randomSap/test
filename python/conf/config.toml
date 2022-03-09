@@ -1,28 +1,17 @@
 
 platform_url = 'https://platform-in.risksense.com'
 
-# The API Token can be generated in the RiskSense UI, under User Settings.
-#api_key = ''
-
 # Specify the path to the folder containing the files you wish to upload.
 # If you update this, please use the absolute path to your desired folder.
-zipfile_name = 'AppThreat_Scan.zip'
 json_filename = 'bandit-report.json'
+folder = 'reports/'
 
 # Trigger URBA upon completion of upload processing.
-auto_urba = true
+#auto_urba = true
 
 # You may uncomment this parameter and enter the desired network ID for your upload here if you already know it.
-network_id = 155014
+#network_id = 155014
 network_name = 'devsectest'
 
 # You may uncomment this parameter and enter the desired client ID for your upload here if you already know it.
 client_id = 100
-
-
-git_user = 'randomSap'
-repo_name = 'test'
-
-
-
-
