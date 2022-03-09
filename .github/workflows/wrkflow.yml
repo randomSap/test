@@ -12,12 +12,12 @@ jobs:
       uses: AppThreat/sast-scan-action@1.0.2
       with:
         src: /github/workspace/work
-        type: reports
+        type: python
     - name: Upload scan reports
       uses: actions/upload-artifact@v1.0.0
       with:
         name: sast-scan-reports
-        path: python
+        path: reports
     - name: Upload to RS
       env:
         RS_API_KEY: ${{ secrets.RS_API_KEY}}
