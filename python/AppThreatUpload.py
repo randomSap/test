@@ -10,12 +10,17 @@ from zipfile import ZipFile
 
 
 def jsontocsv(json_filename,folder):
-  with open(folder+json_filename) as json_format_file: 
-    j = json.load(json_format_file)
-  csv_filename = "AppThreatReport.csv"
-  csv = open("AppThreatReport.csv","w")
-  csvdata = "Pluginid,Locaiton,Address,Name,Title,Severity,Description,Solution\n"
-  csv.write(csvdata)
+  try:
+    with open(folder+json_filename) as json_format_file: 
+      j = json.load(json_format_file)
+    csv_filename = "AppThreatReport.csv"
+    csv = open("AppThreatReport.csv","w")
+    csvdata = "Pluginid,Locaiton,Address,Name,Title,Severity,Description,Solution\n"
+    csv.write(csvdata)
+  except:
+    print("Error while creating the CSV file")
+    print("Exiting...")
+    sys.exit(0)
   for i in j['results']:
     res=dict(i)
     csvdata=res['test_id'] + "," #REQUIRED
@@ -36,6 +41,7 @@ def jsontocsv(json_filename,folder):
     csvdata += "\n"
     csv.write(csvdata)
   csv.close()
+
   return csv_filename
 
 
@@ -256,11 +262,11 @@ def main():
   #READING THE CONFIG FILE 
   conf_file = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'conf', 'config.toml')
   config = read_config_file(conf_file)
-  platform_url, api_key, client_id, network_name, json_filename = process_config(config)
+  platform_url, api_key, client_id, network_name, json_filename, folder= process_config(config)
   #CHECKING FOR MISSING VARIABLES
   if (json_filename == "" or network_name == "" or client_id == "" or platform_url == "" or api_key == ""):
     print("Missing one or more of the following values ")
-    print("\n[+] JsonFile Name \n[+] API kay \n[+] Client ID \n[+] Platform URL \n[+] Network Name")
+    print("\n[+] JsonFile Name (Report) \n[+] API kay \n[+] Client ID \n[+] Platform URL \n[+] Network Name \n[+] Report Folder Name")
     sys.exit(0)
   
 
