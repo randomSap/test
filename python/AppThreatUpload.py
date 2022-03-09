@@ -54,7 +54,7 @@ def read_config_file(filename):
 def process_config(config):
   try:
     platform_url = config['platform_url']
-    api_key = config['api_key']
+    api_key = os.getenv('RS_API_KEY')
     json_filename = config['json_filename']
     client_id = config['client_id']
     network_id = config['network_id']
