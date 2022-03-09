@@ -62,7 +62,7 @@ def process_config(config):
   except:
     print("Error accessing/using data from the config file.")
     print("The config file must contain the following values")
-    print("platform_url, api_key, client_id, network_id, json_filename")
+    print("[+] platform_url \n[+] api_key\n[+] client_id\n[+] network_id\n[+] json_filename")
   return platform_url, api_key, client_id, network_name,json_filename
 
 
@@ -119,7 +119,7 @@ def create_assessment(platform_url,api_key,client_id):
       sys.exit(0)
 
 
-# GETTING THE UPLOAD ID  
+# GET THE UPLOAD ID  
 def get_upload_id(platform_url, api_key, client_id, assessment_id, network_id):
 
   url = "{}//api/v1/client/{}/upload".format(
@@ -148,7 +148,7 @@ def get_upload_id(platform_url, api_key, client_id, assessment_id, network_id):
       sys.exit(0)
 
 
-#Upload the file using the upload_id 
+# UPLOAD FILE USING UPLOAD ID 
 def upload_file(upload_id,platform_url,client_id,api_key,csv_filename):
 
   url = "{}//api/v1/client/{}/upload/{}/file".format(
