@@ -1,7 +1,7 @@
 # Appthreat for SAST 
 [App Threat](https://github.com/AppThreat/sast-scan) is a fully open-source SAST scanner supporting a range of languages and frameworks. This tool is used with GitHub actions using this [action](https://github.com/marketplace/actions/sast-scan).
 
-## How to scan files in this repo 
+## How to scan files 
 * Add files to the **/AppThreat/files** directory.
 
 **Thats it !!!**
@@ -17,4 +17,5 @@
 * Get the network ID from Risk Sense using the network name from the config file. 
 * Create an assessment in Risk Sense using the name AppThreat_\<Date\>_\<Time\>.
 * Get an upload id. 
-* Upload the csv file using the upload id.
+* Upload the csv file using the upload id to Risk Sense.
+* Start parsing the uploaded file. 
